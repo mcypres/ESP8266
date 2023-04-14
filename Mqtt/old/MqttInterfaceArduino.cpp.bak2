@@ -1,0 +1,62 @@
+/*
+ * MqttInterfaceArduino.cpp
+ *
+ *  Created on:22/08/2020
+ *      Author: marc
+ */
+#include <MqttInterfaceArduino.h>
+#include <MqttInterface.h>
+ MqttInterfaceArduino::MqttInterfaceArduino( HardwareSerial* ptEspSer,
+ 											Logger* myLogger,
+ 											const char* machineName,
+ 											const char* netName) : 
+ 												ptEspSer(ptEspSer),
+ 												myLogger(myLogger),
+ 												MqttInterface( machineName, netName){
+ }
+ 
+void MqttInterfaceArduino::publish( const char* topic, const char* payload){
+	_LOG_PRINT(D," topic ",topic);
+	_LOG_PRINT(D," payload ",payload);
+	ptEspSer->print(START_CHAR);
+	_LOG_PRINT(D," START_CHAR ",START_CHAR);
+	ptEspSer->print('p');
+	_LOG_PRINT(D," payload ","p");
+	ptEspSer->print(netName);
+	//_LOG_PRINT(D," netName ",netName);
+	//ptEspSer->print('/');
+	_LOG_PRINT(D," / ",'/');
+	ptEspSer->print(machineName);
+	_LOG_PRINT(D," machineName ",machineName);
+	ptEspSer->print('/');
+	_LOG_PRINT(D," / ",'/');
+	ptEspSer->print(topic);
+	_LOG_PRINT(D," topic",topic);
+	ptEspSer->print(SEPA_CHAR);	
+	_LOG_PRINT(D," SEPA_CHAR ",SEPA_CHAR);
+	ptEspSer->println(payload);
+	_LOG_PRINT(D," payload",payload);
+
+}
+/*
+boolean MqttInterfaceArduino::isconnected(const String * msg=NULL
+
+ 
+ ){
+		if (msg==NULL) return connected;
+       if (msg->indexOf(MQTT_CONNECTED) >=0) {
+           connected = true;
+           _LOG_PRINT(D,F("MQTT "),F("Connected"));
+       }
+       if (msg->indexOf(MQTT_DISNECTED) >=0) {
+       		connected = true;
+           _LOG_PRINT(D,F("MQTT  "),"Connected");
+         }
+       return connected;
+}*/
+
+void  MqttInterfaceArduino:: connect(){
+}
+
+
+
